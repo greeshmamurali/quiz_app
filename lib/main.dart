@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/view/colorConstants.dart';
+import 'package:quiz_app/utils/colorConstants.dart';
 import 'package:quiz_app/view/homescreen/homescreen.dart';
 
 void main() {

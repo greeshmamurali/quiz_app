@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/view/colorConstants.dart';
+import 'package:quiz_app/utils/colorConstants.dart';
 import 'package:quiz_app/view/dummydb.dart';
 import 'package:quiz_app/view/homescreen/homescreen.dart';
 
@@ -16,17 +16,21 @@ class _ResultState extends State<Result> {
   percentage() {
     var percent = (widget.rightAnserCount / Dummydb.data.length) *100;
     print(percent);
-    if (percent >= 80) {
+ 
+       if (percent >= 80) {
       starCount = 3;
     } else if (percent >= 50) {
       starCount = 2;
     } else if (percent >= 30) {
       starCount = 1;
     }
+  
+   
     
   }
-
-  void initstate() {
+ 
+  @override
+  void initState() {
     percentage();
   }
 
@@ -74,7 +78,7 @@ class _ResultState extends State<Result> {
             style: TextStyle(color: Colors.grey, fontSize: 14),
           ),
           Text(
-            '6/13',
+            '${widget.rightAnserCount}/13',
             style: TextStyle(color: Colorconstants.STAR),
           ),
           SizedBox(
