@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/utils/colorConstants.dart';
+import 'package:quiz_app/view/discover/discover.dart';
 import 'package:quiz_app/view/dummydb.dart';
 import 'package:quiz_app/view/homescreen/homescreen.dart';
 
 class Result extends StatefulWidget {
   int rightAnserCount;
-  Result({required this.rightAnserCount, super.key});
+  int selectedindex;
+  Result({
+    required this.selectedindex,
+    required this.rightAnserCount, super.key});
 
   @override
   State<Result> createState() => _ResultState();
@@ -13,31 +17,32 @@ class Result extends StatefulWidget {
 
 class _ResultState extends State<Result> {
   int starCount = 0;
+  List questions=[];
+  
   percentage() {
-    var percent = (widget.rightAnserCount / Dummydb.data.length) *100;
-    print(percent);
- 
-       if (percent >= 80) {
+    var percent = (widget.rightAnserCount / questions.length) * 100;
+    
+
+    if (percent >= 80) {
       starCount = 3;
     } else if (percent >= 50) {
       starCount = 2;
     } else if (percent >= 30) {
       starCount = 1;
     }
-  
-   
-    
   }
- 
+
   @override
   void initState() {
+    questions=Dummydb.data[widget.selectedindex]['questions'];
     percentage();
+   
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colorconstants.RESULT_BG,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -75,11 +80,13 @@ class _ResultState extends State<Result> {
           ),
           Text(
             'Your Score',
-            style: TextStyle(color: Colors.grey, fontSize: 14),
+            style: TextStyle(
+                color: Colors.grey, fontSize: 14, fontWeight: FontWeight.bold),
           ),
           Text(
-            '${widget.rightAnserCount}/13',
-            style: TextStyle(color: Colorconstants.STAR),
+            '${widget.rightAnserCount}/10',
+            style: TextStyle(
+                color: Colorconstants.STAR, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 40,
@@ -89,26 +96,27 @@ class _ResultState extends State<Result> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Homescreen(),
+                    builder: (context) => Discover(),
                   ));
             },
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
+              margin: EdgeInsets.symmetric(horizontal: 50),
               padding: EdgeInsets.symmetric(
-                vertical: 4,
+                vertical: 5,
               ),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(7)),
+                  color: Colorconstants.RETRY,
+                  borderRadius: BorderRadius.circular(9)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
                       backgroundColor: Colors.black,
-                      radius: 14,
+                      radius: 12,
                       child: Icon(
                         Icons.settings_backup_restore,
                         color: Colors.white,
-                        size: 16,
+                        size: 14,
                       )),
                   SizedBox(
                     width: 4,
@@ -116,7 +124,9 @@ class _ResultState extends State<Result> {
                   Text(
                     'Retry',
                     style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
+                        color: Colorconstants.TEXT_COLOR,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17),
                   )
                 ],
               ),
